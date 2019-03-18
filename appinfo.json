@@ -1,0 +1,10 @@
+{
+		"name": "Video Score 0.0.1",
+		"short_name": "Video Score",
+		"version": "v 0.0.1",
+		"description": "Analyze, Structure and Annotate Videos  in a Score Editor",
+        "short_description": "Analyze, Structure and Annotate Videos in a Score Edito",
+		"catalogue_url": "",
+		"application_url": "",
+		"tags": ["Development"]
+}
