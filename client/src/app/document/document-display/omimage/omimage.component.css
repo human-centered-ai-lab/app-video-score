@@ -1,0 +1,14 @@
+.outerdiv {
+  position: relative;
+  display: inline;
+}
+
+.omcanvas {
+/*  position: absolute; */
+  z-index: 0;
+}
+
+.overlaycanvas {
+  position: absolute;
+  z-index: 100;
+}

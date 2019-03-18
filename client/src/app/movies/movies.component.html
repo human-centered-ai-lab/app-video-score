@@ -1,0 +1,50 @@
+<table mat-table [dataSource]="movies$|async" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let m"> {{m.id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let m"> 
+        <a routerLink="/detail/{{m.uuid}}"> {{m.name}}</a> 
+  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stripe">
+    <th mat-header-cell *matHeaderCellDef> Stripes </th>
+      <td mat-cell *matCellDef="let m"> 
+        {{m.stripeStatus}} &#37; 
+  </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="cut">
+    <th mat-header-cell *matHeaderCellDef> Cuts </th>
+      <td mat-cell *matCellDef="let m"> 
+        {{m.cutStatus}} &#37; 
+  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="doc">
+    <th mat-header-cell *matHeaderCellDef> Doc </th>
+      <td mat-cell *matCellDef="let m"> 
+        {{m.docStatus}} &#37; 
+  </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="uri">
+    <th mat-header-cell *matHeaderCellDef> Link </th>
+    <td mat-cell *matCellDef="let m"> 
+        <a href="{{m.uri}}" target="_blank"> {{m.uri}}</a>       
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

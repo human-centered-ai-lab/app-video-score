@@ -1,0 +1,34 @@
+<h3>{{(content|async)?.name}}</h3>
+
+
+    <div style="height: 90vh;">
+        <as-split [direction]="direction">
+            <as-split-area size="70">
+                <div *ngIf="co | async">
+                    <ng-container *ngFor="let c of co | async">
+                        <app-contentelement [id]="c.id" [payload]="c.payload"> </app-contentelement>
+                        <span  #gluebetweenCE>_</span>
+                    </ng-container>
+                </div>
+            </as-split-area>
+            <as-split-area size="30">
+               <p>Selected Movie and Frame</p>
+                 
+
+               <div *ngIf="slectedMovie | async">
+                   {{(movies$|async)(slectedMovie|async).name}}  -- {{slectedFrame|async}}
+               </div>
+
+                <vg-player style="height: 300px;" >
+                    <video [vgMedia]="media" #media id="singleVideo" preload="false" controls>
+                        <source src="/static/test-previe.mp4"  type="video/mp4">
+                    </video>
+                </vg-player>
+              <p>Video Display</p>
+            </as-split-area>
+        </as-split>
+    </div>
+
+
+
+

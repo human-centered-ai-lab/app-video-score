@@ -1,0 +1,16 @@
+<div *ngIf=(movies$|async)(id)>
+
+  <br>
+  <a href="{{(movies$|async)(id).uri}}" target="_blank"> {{(movies$|async)(id).name}}</a>
+  <br />
+  stripes:{{(movies$|async)(id).stripeStatus}}&#37; cuts: {{(movies$|async)(id).cutStatus}}&#37; doc: {{(movies$|async)(id).docStatus}}&#37;
+  <div>
+    <button (click)="computeStripes()">(re)compute stripes</button>
+    <button (click)="computeCuts()">(re)compute cuts</button>
+    <button (click)="makeDocAndOmImages()">(re)compute Doc and OM Images</button>
+    <button (click)="goBack()">go back</button>
+  </div>
+  <br />
+  
+  <app-stripes id = "{{(movies$|async)(id).id}}"></app-stripes>
+</div>

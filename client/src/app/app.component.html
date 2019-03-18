@@ -1,0 +1,55 @@
+<!--The content below is only a placeholder and can be replaced.-->
+ 
+  <div class="appdecoration">
+
+    <mat-icon svgIcon="home"></mat-icon>
+    <button mat-button [matMenuTriggerFor]="menu">File</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>New</button>
+        <button mat-menu-item (click)="openDocumentList()">Open</button>
+        <button mat-menu-item>Recent</button>
+        <button mat-menu-item>Upload</button>
+        <button mat-menu-item>Link to Nextcloud</button>
+        <button mat-menu-item>Export</button>
+        <button mat-menu-item>Close</button>
+      </mat-menu>
+    <button mat-button [matMenuTriggerFor]="edit">Edit</button>
+    <mat-menu #edit="matMenu">
+        <button mat-menu-item>Copy</button>
+        <button mat-menu-item>Cut</button>
+        <button mat-menu-item>Paste</button>
+         <button mat-menu-item>Search</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="view">View</button>
+    <mat-menu #view="matMenu">
+        <button mat-menu-item>Outline</button>
+        <button mat-menu-item>OM Images</button>
+        <button mat-menu-item>Audio track</button>
+         <button mat-menu-item>Export</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="format">Format</button>
+    <mat-menu #format="matMenu">
+        <button mat-menu-item>Headings</button>
+        <button mat-menu-item>Paragraph</button>
+        <button mat-menu-item>Text</button>
+         <button mat-menu-item>OM Images</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="format">Analyze</button>
+    <mat-menu #analyze="matMenu">
+        <button mat-menu-item>Cut Sructure</button>
+        <button mat-menu-item>Audio Structure</button>
+        <button mat-menu-item>Novements</button>
+         <button mat-menu-item>Persons</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="window">Window</button>
+    <mat-menu #window="matMenu">
+        <button mat-menu-item>Score</button>
+        <button mat-menu-item (click)="openMovieList()">Movies</button>
+        <button mat-menu-item (click)="showTasks()">Background Tasks</button>
+        <button mat-menu-item>Help</button>
+    </mat-menu>
+
+    <router-outlet></router-outlet>
+  </div>
+
+

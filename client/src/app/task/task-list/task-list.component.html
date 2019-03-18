@@ -1,0 +1,38 @@
+<h3>Backgound Tasks on Server</h3>
+
+
+<table mat-table [dataSource]="tasks$|async" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+<ng-container matColumnDef="movieID">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let t"> 
+        <a routerLink="/detail/{{t.movieID}}">  {{(movies$|async)(t.movieID).name}}  </a> 
+  </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="actionID">
+    <th mat-header-cell *matHeaderCellDef> command </th>
+    <td mat-cell *matCellDef="let t"> {{t.actionID}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef> state </th>
+    <td mat-cell *matCellDef="let t"> {{t.state}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="progress">
+    <th mat-header-cell *matHeaderCellDef> progress </th>
+      <td mat-cell *matCellDef="let t"> 
+        {{t.progress}} &#37; 
+  </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
