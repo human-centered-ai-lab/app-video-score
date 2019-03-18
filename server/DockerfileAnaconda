@@ -1,0 +1,54 @@
+FROM continuumio/miniconda3
+
+MAINTAINER Heimo Müller "heimo.mueller@mac.com"
+
+ENV PYTHONUNBUFFERED 1
+ENV CELERY_BROKER_URL       redis://redis:6379/0
+ENV CELERY_RESULT_BACKEND   redis://redis:6379/0
+ENV C_FORCE_ROOT true
+ENV OPENCV_VERSION 3.4.2
+
+RUN conda create -n env python=3.6
+RUN echo "source activate env" > ~/.bashrc
+ENV PATH /opt/conda/envs/env/bin:$PATH
+
+RUN conda install -c https://conda.anaconda.org/conda-forge flask
+RUN conda install -c https://conda.anaconda.org/conda-forge ffmpeg
+RUN conda install -c https://conda.anaconda.org/conda-forge opencv
+
+RUN conda install  psycopg2
+#
+#  YOUTUBE-DL
+#
+RUN     wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+RUN     chmod a+rx /usr/local/bin/youtube-dl
+#
+# FLASK SERVER
+#
+
+RUN mkdir -p /usr/src/app
+
+# Update working directory
+WORKDIR /usr/src/app
+
+# copy everything from this directory to server/flask docker container
+COPY ./requirements.txt /usr/src/app/
+COPY ./entrypoint.sh    /usr/src/app/
+COPY ./*.py  /usr/src/app/
+COPY ./uwsgi.*  /usr/src/app/
+
+
+# Give execute permission to below file, so that the script can be executed by docker.
+RUN chmod 777 /usr/src/app/entrypoint.sh
+
+# Install the Python libraries
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY uswgi.ini
+COPY ./uwsgi.ini /etc/uwsgi.ini
+
+EXPOSE 5000
+
+# run server
+CMD ["./entrypoint.sh"]
