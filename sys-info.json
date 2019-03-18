@@ -1,0 +1,12 @@
+{
+  runningcontainers:["§§INSTANCE-video-score-nginx",
+                     "§§INSTANCE-video-score-server",
+                     "§§INSTANCE-video-score-postgres",
+                     "§§INSTANCE-video-score-postgres",
+                     "§§INSTANCE-video-score-adminer",
+                     "§§INSTANCE-video-score-celery",
+                     "§§INSTANCE-video-score-celery-monitor",
+                     "§§INSTANCE-video-score-redis"
+                    ],
+  supportcontainers:["§§INSTANCE-video-score-data"]
+}

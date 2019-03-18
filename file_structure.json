@@ -1,0 +1,31 @@
+{
+  "makefolders":[
+    "data/postgresql/data",
+    "data/movies/yt",
+    "data/movies/fs",
+    "data/movies",
+    "data/celery"
+  ],
+  "copyfiles":[
+    {
+            "source":      "server",
+            "destination": "server"
+    },
+    {
+            "source":      "nginx",
+            "destination": "nginx"
+    },
+    {
+            "source":      "postgresql",
+            "destination": "postgresql"
+    },
+    {
+            "source":      "client",
+            "destination": "client"
+    },
+    {
+            "source":      ".env",
+            "destination": ".env"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+version: '2'
+
+services:
+
+  bibbox-video-score-nginx:
+    container_name: bibbox-video-score-nginx
+    restart: unless-stopped
+    image: nginx
+    links:
+        -  bibbox-video-score-server:video-score-server
+    build:
+      context:    ./nginx
+      dockerfile: Dockerfile
+    volumes:
+     - ./client/dist:/usr/share/nginx/html
+     - ./data/movies:/usr/share/nginx/html/static
+    ports:
+      - "8077:80"
+    depends_on:
+      - bibbox-video-score-server
+
+  bibbox-video-score-server:
+    container_name: bibbox-video-score-server
+    restart: unless-stopped
+    links:
+        - bibbox-video-score-postgres:postgres
+        - bibbox-video-score-redis:redis
+        - bibbox-video-score-celery:celery
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    depends_on:
+      - bibbox-video-score-postgres
+    volumes_from:
+     - bibbox-video-score-data
+    env_file:
+     - .env
+
+  bibbox-video-score-postgres:
+      container_name: bibbox-video-score-postgres
+      restart: unless-stopped
+      build:
+        context:   ./postgresql
+        dockerfile: Dockerfile
+      env_file:
+        - .env
+
+  bibbox-video-score-adminer:
+    image: adminer
+    restart: unless-stopped
+    container_name: bibbox-video-score-adminer
+    links:
+      - bibbox-video-score-postgres:db
+    depends_on:
+      - bibbox-video-score-postgres
+    ports:
+      - "8078:8080"
+
+  bibbox-video-score-celery:
+    container_name: bibbox-video-score-celery
+    restart: unless-stopped
+    links:
+        - bibbox-video-score-postgres:postgres
+        - bibbox-video-score-redis:redis
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    command: "celery worker  -A celery_worker.app_celerey --loglevel=info"
+    user: nobody
+    depends_on:
+      - bibbox-video-score-postgres
+    volumes_from:
+        - bibbox-video-score-data
+    env_file:
+      - .env
+
+  bibbox-video-score-celery-monitor:
+    container_name: bibbox-video-score-celery-monitor
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+     - "8079:5555"
+    links:
+     - bibbox-video-score-redis:redis
+    volumes_from:
+     - bibbox-video-score-data
+    entrypoint: flower
+    command:  -celery A celery_worker.app_celerey --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - bibbox-video-score-redis
+
+  bibbox-video-score-redis:
+    container_name: bibbox-video-score-redis
+    image: redis
+    restart: unless-stopped
+
+  bibbox-video-score-data:
+    image: busybox
+    container_name: bibbox-video-score-data
+    volumes:
+      - ./data/postgresql/data:/var/lib/postgresql/data
+      - ./data/movies:/data/movies
+      - ./server:/usr/src/movieannotator/server
+      - ./data/celery:/queue

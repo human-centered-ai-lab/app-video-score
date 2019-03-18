@@ -1,0 +1,107 @@
+# Run docker-compose build
+# Run docker-compose up
+# Live long and prosper
+
+version: '2'
+
+services:
+
+  bibbox-movie-analyzer-nginx:
+    container_name: bibbox-movie-analyzer-nginx
+    restart: always
+    image: nginx
+    build:
+      context:    ./nginx
+      dockerfile: Dockerfile
+    volumes:
+     - ./client/dist:/usr/share/nginx/html
+     - ./data/movies:/usr/share/nginx/html/static
+    ports:
+      - "8077:80"
+      - "443:443"
+    depends_on:
+      - bibbox-movie-analyzer-flask
+
+  bibbox-movie-analyzer-flask:
+    container_name: bibbox-movie-analyzer-flask
+    restart: always
+    links:
+        - bibbox-movie-analyzer-postgres:postgres
+        - bibbox-movie-analyzer-redis:redis
+        - bibbox-movie-analyzer-celery:celery
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    depends_on:
+      - bibbox-movie-analyzer-postgres
+    volumes_from:
+     - bibbox-movie-analyzer-data
+    env_file:
+     - .env
+
+  bibbox-movie-analyzer-postgres:
+      container_name: bibbox-movie-analyzer-postgres
+      restart: always
+      build:
+        context:   ./postgresql
+        dockerfile: Dockerfile
+      ports:
+         - "5432:5432"
+      env_file:
+        - .env
+
+  bibbox-movie-analyzer-adminer:
+    image: adminer
+    container_name: bibbox-movie-analyzer-adminer
+    links:
+      - bibbox-movie-analyzer-postgres:db
+    depends_on:
+      - bibbox-movie-analyzer-postgres
+    ports:
+      - "8078:8080"
+
+  bibbox-movie-analyzer-celery:
+    container_name: bibbox-movie-analyzer-celery
+    links:
+        - bibbox-movie-analyzer-postgres:postgres
+        - bibbox-movie-analyzer-redis:redis
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    command: "celery worker  -A celery_worker.app_celerey --loglevel=info"
+    user: nobody
+    depends_on:
+      - bibbox-movie-analyzer-postgres
+    volumes_from:
+        - bibbox-movie-analyzer-data
+    env_file:
+      - .env
+
+  bibbox-movie-analyzer-celery-monitor:
+    container_name: bibbox-movie-analyzer-celery-monitor
+    build:
+      context:    ./server
+      dockerfile: Dockerfile
+    ports:
+     - "8079:5555"
+    links:
+     - bibbox-movie-analyzer-redis:redis
+    volumes_from:
+     - bibbox-movie-analyzer-data
+    entrypoint: flower
+    command:  -celery A celery_worker.app_celerey --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - bibbox-movie-analyzer-redis
+
+  bibbox-movie-analyzer-redis:
+     container_name: bibbox-movie-analyzer-redis
+     image: redis
+
+  bibbox-movie-analyzer-data:
+    image: busybox
+    container_name: bibbox-movie-analyzer-data
+    volumes:
+      - ./data/postgresql/data:/var/lib/postgresql/data
+      - ./data/movies:/data/movies
+      - ./server:/usr/src/movieannotator/server
+      - ./celery:/queue
