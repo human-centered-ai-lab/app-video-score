@@ -1,4 +1,4 @@
-# Video Score BIBBOX application
+# Video Score
 
 ## Prerequisites
 * `docker` 
