@@ -1,2 +1,4 @@
 data
+video-score-env
 client/node_modules
+client/yarn.lock
