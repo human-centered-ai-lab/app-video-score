@@ -1,0 +1,22 @@
+{
+  "mappings": [
+    {
+      "id": "§§PORT-MAINAPP",
+      "url": "§§INSTANCE",
+      "protocol": "HTTP",
+      "proxy" : "PRIMARY"
+    },
+    {
+      "id": "§§PORT-ADMINER",
+      "url": "§§INSTANCE-adminer",
+      "protocol": "HTTP",
+      "proxy" : "PRIMARY"
+    },
+    {
+      "id": "§§PORT-CELERY-MONITOR",
+      "url": "§§INSTANCE-celery",
+      "protocol": "HTTP",
+      "proxy" : "PRIMARY"
+    }
+  ]
+}
