@@ -124,7 +124,7 @@ def seed_db():
         width="720 ",
         height="288"
     ))
-        db.session.add(Movie(
+    db.session.add(Movie(
         uuid="33db9eb5-6bc6-4f76-929d-f09622b89db7",
         name="Star.Trek.Raumschiff.Enterprise.TOS.S01E01.Das.letzte.seiner.Art.	",
         source="FILESYSTEM",
@@ -133,7 +133,7 @@ def seed_db():
         width="960",
         height="720"
     ))
-        db.session.add(Movie(
+    db.session.add(Movie(
         uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
         name="Hobbit",
         source="FILESYSTEM",

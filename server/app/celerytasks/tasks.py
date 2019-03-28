@@ -40,7 +40,7 @@ tag_service   = TagService()
 def syncMovieInClient (movie, taskID):
 
 #    print (taskID, movie.stripeStatus)
-    payload =  { 'id': movie.id, 'changes':{'stripeStatus':movie.stripeStatus, 'numberOfStripes':movie.numberOfStripes }}
+    payload =  { 'id': movie.uuid, 'changes':{'stripeStatus':movie.stripeStatus, 'numberOfStripes':movie.numberOfStripes }}
     sse.publish(  type='greeting',
                   data=
                   { 'storeID':'MOVIE', 
@@ -99,17 +99,20 @@ def generateDocAndOmImages (self, movieID, actionID):
 
     def logProgressCutDetection(t, f):      
         movie = movie_service.get(id)
-        perz =  100.0 * float(f) / float (t)
-        perzi = 1.0 * int (perz+0.5)
+        perzi = 0    
+        
+        if (t > 0):
+            perz =  100.0 * float(f) / float (t)
+            perzi = 1.0 * int (perz+0.5)
 
         self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movieID, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
 
         if (perzi != movie.docStatus):
             movie.docStatus =  perzi
             movie = movie_service.save(movie)
-            payload =  { 'id': movie.id, 'changes':{'docStatus':movie.docStatus }}
+            payload =  { 'id': movie.uuid, 'changes':{'docStatus':movie.docStatus }}
             sse.publish(  type='greeting',
                   data=
                   { 'storeID':'MOVIE', 
@@ -125,26 +128,17 @@ def generateDocAndOmImages (self, movieID, actionID):
  
     self.update_state (
          state='PROGRESS', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 0}    )
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 0}    )
     syncTaskListInClient ()
 
     d = generateDocumentAndCaches (movieID, progresscallback = logProgressCutDetection) 
 
     self.update_state (
          state='FINISHED', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
     syncTaskListInClient ()
 
  
-
-
-
-
-
-
-
-
-
 #
 # GENERATE STRIPE IMAGE DATA STRUCTURE
 #
@@ -192,7 +186,7 @@ def generateStripes(self, movieID, actionID):
 
      self.update_state (
          state='PROGRESS', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 0}  ) 
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 0}  ) 
 
      success = 1
      while success:
@@ -215,7 +209,7 @@ def generateStripes(self, movieID, actionID):
 
                 self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movieID, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
 
                 if (perzi != movie.stripeStatus):
                     movie.stripeStatus = 1.0 * perzi
@@ -247,7 +241,7 @@ def generateStripes(self, movieID, actionID):
      syncMovieInClient (movie, self.request.id)   
      self.update_state (
          state='FINISHED', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
      
      syncTaskListInClient ()     
 
@@ -267,12 +261,12 @@ def computeCuts(self, movieID, actionID):
 
         self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movieID, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
 
         if (perzi != movie.cutStatus):
             movie.cutStatus =  perzi
             movie = movie_service.save(movie)
-            payload =  { 'id': movie.id, 'changes':{'cutStatus':movie.cutStatus }}
+            payload =  { 'id': movie.uuid, 'changes':{'cutStatus':movie.cutStatus }}
             sse.publish(  type='greeting',
                   data=
                   { 'storeID':'MOVIE', 
@@ -305,7 +299,7 @@ def computeCuts(self, movieID, actionID):
 
     self.update_state (
          state='FINISHED', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
     syncTaskListInClient ()
     print (n)
 
@@ -320,24 +314,9 @@ def computeOmImages(self, movieID, actionID):
     cuts = movie.tags
     self.update_state (
          state='FINISHED', 
-         meta={'movieID': movieID, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
     syncTaskListInClient ()
 
-
-
-
-
-@app_celerey.task(bind=True, name='tasks.create_test_task')
-def create_test_task(self, id, command):
-    syncTaskListInClient ()  
-    for i in range (1,100):
-        time.sleep (1)
-        perzi = int (100*float(i)/120)
-        self.update_state ( state='PROGRESS', meta={'movieID':id, 'actionID' :command, 'progress': perzi} )
-        syncTaskInClient (self.request.id, perzi)
-    self.update_state (state='FINISHED',  meta={'movieID': id, 'actionID' :command, 'progress': 100} )
-    syncTaskListInClient ()  
-    return 1
 
 def testyoutube():
     url = 'https://youtu.be/4iwyvroMhDE'

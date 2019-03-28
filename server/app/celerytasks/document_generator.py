@@ -160,7 +160,8 @@ def generateSUBOMIcaches (movie, todolistCache, progresscallback):
         success, image = cap.read()
         if (success):
           subomi = subomis[subomindex]
-          # at the start frane
+          # at the start frame
+          #print (subomi)
           if subomi['start'] == framenumber:
                   if (framenumber > 0):       
                        progresscallback (movie.numberOfFrames , framenumber )

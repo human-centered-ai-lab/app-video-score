@@ -34,6 +34,9 @@
 * In the flask docker container
     * `ps aux | grep uwsgi`
     * `kill - SIGHUP `  add the uwsgi root process number to reload the server 
+    * `python manage.py recreate_db`
+    * `python manage.py seed_db`
+        
 * In the client directory (Angular frontend)
   * `npm install` - install the modules, call the first time after download
   * `ng --version`

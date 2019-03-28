@@ -1,4 +1,8 @@
 data
 video-score-env
+*.py[co]
+*.pyc
+__pycache__
 client/node_modules
 client/yarn.lock
+

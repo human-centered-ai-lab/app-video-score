@@ -42,6 +42,8 @@ services:
       build:
         context:   ./postgresql
         dockerfile: Dockerfile
+      volumes_from:
+        - bibbox-video-score-data  
       env_file:
         - .env
 

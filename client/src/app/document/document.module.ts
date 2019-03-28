@@ -14,7 +14,6 @@ import { AngularSplitModule } from 'angular-split';
 
 // VIDEO PLAYER
 import {VgCoreModule} from 'videogular2/core';
-import {VgCoreModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
 

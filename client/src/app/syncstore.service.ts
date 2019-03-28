@@ -46,7 +46,7 @@ export class SyncstoreService {
     }
 
   dispatchSyncOperation (op: SyncOperation) {
-  //  console.log (op);
+    // console.log (op);
     switch (op.storeID) {
       case 'MOVIE': {
         this.dispatchMovieOperation(op);
@@ -77,7 +77,7 @@ export class SyncstoreService {
   dispatchTaskOperation (op: SyncOperation) {
     switch (op.operation) {
       case 'LOAD': {
-        console.log ("****************** RELOAD TASKS")
+        console.log ('****************** RELOAD TASKS');
         this.store.dispatch(new TasksAPIActions.LoadTasks ());
         break;
       }
@@ -90,8 +90,4 @@ export class SyncstoreService {
       }
     }
   }
-
-  
-
-
 }

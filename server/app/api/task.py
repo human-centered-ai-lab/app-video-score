@@ -7,7 +7,6 @@ from flask import jsonify
 from server.app.api import api
 
 from server.app import app_celerey
-from server.app.celerytasks.tasks  import create_test_task
 
 @api.route("/tasks")
 def  get_tasks():
@@ -59,12 +58,6 @@ def  get_tasks():
         i += 1
 
     return jsonify( tasksorderedbymmovie)
-
-@api.route("/tasks/create_test_task")
-def  createTestTask():
-    command = "[MOVIE] TEST"
-    create_test_task.delay (1, command)
-    return jsonify( 'OK')
 
 @api.route("/tasks/<int:id>")
 def get_Task(id):

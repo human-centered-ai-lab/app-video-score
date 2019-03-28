@@ -56,7 +56,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.store.subscribe ( s  => console.log(s) );
+    // this.store.subscribe ( s  => console.log(s) );
   }
 
   makeOMImageDataStructure (cuts: Cut[]): OMimage[] {
