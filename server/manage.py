@@ -86,7 +86,9 @@ def seed_db():
         uri = "https://youtu.be/SUS9rVwBDH0",
         active = True,
         width="640",
-        height="320"
+        height="360",
+        numberOfFrames=120183,
+        fps =25
     ))
     db.session.add(Movie(
         uuid="c08d8409-63f8-4082-9fbe-90940c86c2ae",
@@ -94,8 +96,10 @@ def seed_db():
         source="YOUTUBE",
         uri="https://youtu.be/4iwyvroMhDE",
         active=True,
-         width="640",
-        height="320"
+        width="480",
+        height="360",
+        numberOfFrames=109035,
+        fps =25
     ))
     db.session.add(Movie(
         uuid="cb28a34a-3d20-41f8-940c-67e99e16ee21",
@@ -103,8 +107,10 @@ def seed_db():
         source="YOUTUBE",
         uri="https://youtu.be/tiNPFqalCh0",
         active=True,
-        width="640",
-        height="320"
+        width="1280",
+        height="720",
+        numberOfFrames=6317,
+        fps =25
     ))
     db.session.add(Movie(
         uuid="85121ddd-b1da-4322-9dc5-6da131a4b3d5",
@@ -113,7 +119,9 @@ def seed_db():
         uri="test.mp4",
         active=True,
         width="1920",
-        height="1080"
+        height="1080",
+        numberOfFrames=8695,
+        fps =11.0025308422008
     ))
     db.session.add(Movie(
         uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
@@ -121,8 +129,10 @@ def seed_db():
         source="FILESYSTEM",
         uri="v.avi",
         active=True,
-        width="720 ",
-        height="288"
+        width="704 ",
+        height="288",
+        numberOfFrames=190650,
+        fps =25
     ))
     db.session.add(Movie(
         uuid="33db9eb5-6bc6-4f76-929d-f09622b89db7",
@@ -131,8 +141,9 @@ def seed_db():
         uri="startrek.mkv",
         active=True,
         width="960",
-        height="720"
-    ))
+        height="720",
+        numberOfFrames=72602,
+        fps = 23.976023976024
     db.session.add(Movie(
         uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
         name="Hobbit",
@@ -140,7 +151,9 @@ def seed_db():
         uri="hobbit.mkv",
         active=True,
         width="1920",
-        height="800"
+        height="800",
+        numberOfFrames=235985,
+        fps =23.976023976024
     ))
     db.session.commit()
 

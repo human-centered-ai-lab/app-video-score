@@ -31,6 +31,7 @@
   * `docker ps`
   * `docker restart bibbox-video-score-celery` celery restart, necessary when the celery task is changed
   * `docker exec -it bibbox-video-score-server  /bin/bash` -  enter the flask docker container
+  * `docker exec -it  bibbox-video-score-nginx /bin/sh` -  enter the nginx docker container
 * In the flask docker container
     * `ps aux | grep uwsgi`
     * `kill - SIGHUP `  add the uwsgi root process number to reload the server 

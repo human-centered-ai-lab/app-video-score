@@ -4,7 +4,7 @@ flask==1.0.2
 Flask-Script==2.0.6
 coverage==4.5.1
 sqlalchemy==1.2.8
-blueprints==2.3.0.2
+flask-blueprint
 Flask-SQLAlchemy==2.3.2
 flask-sqlacodegen==1.1.6.1
 flask-bootstrap==3.3.7.1
@@ -28,5 +28,5 @@ vine==1.1.4
 python-dotenv==0.10.1
 flask-socketio
 moviepy==0.2.3.5
-pafy==0.5.4
-youtube-dl==2018.12.17
+pafy
+youtube-dl

@@ -112,7 +112,7 @@ def generateSUBOMIcaches (movie, todolistCache, progresscallback):
      
      if (movie.source  == "YOUTUBE"):
         vPafy = pafy.new(movie.uri)
-        play = vPafy.getbest(preftype="webm")
+        play = vPafy.getbest()
         cap = cv2.VideoCapture(play.url)
      if (movie.source  == "FILESYSTEM"):
         filename = movieFileName (movie)   

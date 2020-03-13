@@ -32,7 +32,7 @@ playurl_debug = 'https://r4---sn-h0jeen76.googlevideo.com/videoplayback?gir=yes&
 
 vPafy = pafy.new(url)
 print(vPafy)
-play = vPafy.getbest(preftype="webm")
+play = vPafy.getbest()
 print(play)
 print(play.url)
 cap = cv2.VideoCapture(play.url)

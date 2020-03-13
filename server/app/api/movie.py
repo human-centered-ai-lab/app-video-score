@@ -82,7 +82,7 @@ def get_frame(id,fn):
 
      if (movie.source  == "YOUTUBE"):
         vPafy = pafy.new(movie.uri)
-        play = vPafy.getbest(preftype="webm")
+        play = vPafy.getbest()
         cap = cv2.VideoCapture(play.url)
 
      if (movie.source  == "FILESYSTEM"):
@@ -136,7 +136,7 @@ def setparams(id):
 
      if (movie.source  == "YOUTUBE"):
         vPafy = pafy.new(movie.uri)
-        play = vPafy.getbest(preftype="webm")
+        play = vPafy.getbest()
         cap = cv2.VideoCapture(play.url)
 
      if (movie.source  == "FILESYSTEM"):

@@ -149,7 +149,7 @@ def generateStripes(self, movieID, actionID):
 
      if (movie.source  == "YOUTUBE"):
         vPafy = pafy.new(movie.uri)
-        play = vPafy.getbest(preftype="webm")
+        play = vPafy.getbest()
         cap = cv2.VideoCapture(play.url)
 
      if (movie.source  == "FILESYSTEM"):
@@ -283,7 +283,7 @@ def computeCuts(self, movieID, actionID):
 
     if (movie.source  == "YOUTUBE"):
         vPafy = pafy.new(movie.uri)
-        play = vPafy.getbest(preftype="webm")
+        play = vPafy.getbest()
         cap = cv2.VideoCapture(play.url)
 
     if (movie.source  == "FILESYSTEM"):
@@ -322,7 +322,7 @@ def testyoutube():
     url = 'https://youtu.be/4iwyvroMhDE'
     vPafy = pafy.new(url)
     print (vPafy)
-    play = vPafy.getbest(preftype="webm")
+    play = vPafy.getbest()
     print (play)
     print(play.url)
     cap = cv2.VideoCapture(play.url)
