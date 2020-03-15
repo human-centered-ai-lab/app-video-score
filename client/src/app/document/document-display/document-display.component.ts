@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
@@ -7,7 +7,8 @@ import { filter, map, tap, take, mergeMap, catchError, finalize } from 'rxjs/ope
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../app-state/app-state';
 
-import { selectDocumentContent, selectDocumentSlectedMovie, selectDocumentSlectedFrame } from '../document.selectors';
+
+import { selectDocumentContent, selectDocumentSelectedMovie, selectDocumentSelectedFrame } from '../document.selectors';
 import { selectAllMovies, selectMovie, selectMoviesEntities } from '../../entities/movie.selectors';
 
 
@@ -30,12 +31,15 @@ export interface ContentElement {
 })
 export class DocumentDisplayComponent implements OnInit {
 
+
+  @ViewChild('player') player: any;
+  videoId: string;
+
+
   movies$ = this.store.pipe(select(selectMovie));
-  slectedMovie = this.store.pipe (select(selectDocumentSlectedMovie));
-  slectedFrame = this.store.pipe (select(selectDocumentSlectedFrame));
-//         
-
-
+  selectedMovie = this.store.pipe (select(selectDocumentSelectedMovie));
+  selectedFrame = this.store.pipe (select(selectDocumentSelectedFrame));
+  
   id: number;
   content: any  = this.store.pipe(select(selectDocumentContent));
 
@@ -51,6 +55,11 @@ export class DocumentDisplayComponent implements OnInit {
                private  router: Router ) { }
 
   ngOnInit() {
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
 
     this.id = parseInt( this.route.snapshot.paramMap.get('id'), 10);
 

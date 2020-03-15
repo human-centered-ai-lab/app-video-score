@@ -1,11 +1,9 @@
 """
-Test Suite for Flask. 
-To run:
-python test_suite test
-python test_suite cov
+
 """
 
 import unittest
+import os
 from coverage import coverage
 from flask_script import Manager
 
@@ -29,12 +27,20 @@ COV = coverage(
     ]
 )
 
+
 COV.start()
 
 # create flask application instance
-socketio, app  = create_app ('development')
+
+app = create_app ('development')
+
+# test websockets
+#socketio, app  = create_app ('development')
+
 manager = Manager(app)
 
+print ("=========== ENVIRONMENT ============")
+print ("FLASK_CONFIG = ", os.environ["FLASK_CONFIG"])
 
 @manager.command
 def test():
@@ -144,6 +150,7 @@ def seed_db():
         height="720",
         numberOfFrames=72602,
         fps = 23.976023976024
+    ))    
     db.session.add(Movie(
         uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
         name="Hobbit",
@@ -155,6 +162,7 @@ def seed_db():
         numberOfFrames=235985,
         fps =23.976023976024
     ))
+
     db.session.commit()
 
 if __name__ == '__main__':

@@ -18,13 +18,14 @@ import random
 from celery import Celery
 
 from server.app.api import api
-from server.app     import socketio
+#from server.app     import socketio
 
 from server.app.celerytasks.tasks  import analyzeMovieSync
 from server.app.services.movie_utils import stripeBaseDirectory, keframeBaseDirectory, keyFrameName, stripeFileName, stripeStaticURL, movieCacheDirectory, movieFileName
 
 from flask_sse import sse
-from flask_socketio import send, emit
+
+#from flask_socketio import send, emit
 
 from server.app import db
 from server.app.models.movie import Movie
@@ -160,7 +161,6 @@ def test_tom(id):
 
 @api.route('/movie/syncmovie')
 def publish_hello():
-#   sse.publish(  {'id': 2, 'changes':{'name':'HEIMO'} }, type='greeting')
     sse.publish(  type='greeting',
                   data=
                   { 'storeID':'MOVIE', 
@@ -174,7 +174,9 @@ def publish_hello():
     print (url_for("sse.stream", channel="users.social"))
     return "Message sent!"
 
+'''
 @socketio.on('connect', namespace='/chat')
 def test_connect():
     print ('WEBSOCKETS CONNECTED')
     emit('my response', {'data': 'Connected'})
+'''

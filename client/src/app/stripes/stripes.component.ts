@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Input } from '@angular/core';
-import { Renderer, ViewChild } from '@angular/core'
+import { Renderer2, ViewChild } from '@angular/core'
 
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../movie.service';
@@ -24,7 +24,7 @@ export class StripesComponent implements OnInit {
   @ViewChild('imageCanvas')   imageCanvas: ElementRef;
   @ViewChild('overlayCanvas') overlayCanvas: ElementRef;
 
-  constructor(private renderer: Renderer, private movieService: MovieService, private route: ActivatedRoute) { }
+  constructor(private renderer: Renderer2, private movieService: MovieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getStripes();
@@ -66,7 +66,7 @@ export class StripesComponent implements OnInit {
   assignStripesAndDrawImages (stripes): void {
       this.stripes = stripes;
       const h = this.stripes.length * 80;
-      this.renderer.setElementProperty(this.imageCanvas.nativeElement, 'height', h.toString());
+      this.renderer.setAttribute(this.imageCanvas.nativeElement, 'height', h.toString());
       this.drawImages();
   }
 
@@ -74,7 +74,7 @@ export class StripesComponent implements OnInit {
       this.cuts = cuts;
       const lastfn =  cuts[cuts.length - 1].fn;
       const h = 80 * Math.ceil(lastfn / 1500.0);
-      this.renderer.setElementProperty(this.overlayCanvas.nativeElement, 'height', h.toString());
+      this.renderer.setAttribute(this.overlayCanvas.nativeElement, 'height', h.toString());
       this.drawOverlay();
   }
 

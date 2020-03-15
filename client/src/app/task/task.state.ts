@@ -5,7 +5,7 @@ import * as TaskAPIReducers from './task-api.reducer';
 import { AppState } from '../app-state/app-state';
 
 
-export interface AppState extends AppState  {
+export interface AppStateTask extends AppState  {
     task: any;
   }
 

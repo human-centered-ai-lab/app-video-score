@@ -4,5 +4,5 @@ import { AppState} from '../app-state/app-state';
 
 
 export const selectDocumentContent = (state: AppState) => state.document.document.content;
-export const selectDocumentSlectedMovie = (state: AppState) => state.document.document.selectedMovieUUID;
-export const selectDocumentSlectedFrame = (state: AppState) => state.document.document.selectedFrame;
+export const selectDocumentSelectedMovie = (state: AppState) => state.document.document.selectedMovieUUID;
+export const selectDocumentSelectedFrame = (state: AppState) => state.document.document.selectedFrame;

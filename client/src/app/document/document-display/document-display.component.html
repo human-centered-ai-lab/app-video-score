@@ -1,6 +1,5 @@
 <h3>{{(content|async)?.name}}</h3>
 
-
     <div style="height: 90vh;">
         <as-split [direction]="direction">
             <as-split-area size="70">
@@ -14,17 +13,19 @@
             <as-split-area size="30">
                <p>Selected Movie and Frame</p>
                  
-
-               <div *ngIf="slectedMovie | async">
-                   {{(movies$|async)(slectedMovie|async).name}}  -- {{slectedFrame|async}}
+               <div *ngIf="selectedMovie | async">
+                   {{(movies$|async)(selectedMovie|async).name}}  -- {{selectedFrame|async}}
                </div>
-
-                <vg-player style="height: 300px;" >
-                    <video [vgMedia]="media" #media id="singleVideo" preload="false" controls>
-                        <source src="/static/test-previe.mp4"  type="video/mp4">
-                    </video>
-                </vg-player>
-              <p>Video Display</p>
+              {{youtubevideoid}}
+              <p>YOUTUBE VIDEO </p>
+              
+              <youtube-player
+              [videoId]="tiNPFqalCh0"
+              [height]="600"
+              [width]="1080"
+              >
+              </youtube-player>
+            <p>YOUTUBE VIDEO  END</p>
             </as-split-area>
         </as-split>
     </div>

@@ -27,5 +27,9 @@ if [ ! -f  DBINIT.DONE ]; then
     touch DBINIT.DONE
 fi
 
-python runflask.py
-#uwsgi --py-autoreload 1 --ini /etc/uwsgi.ini
+
+uwsgi --py-autoreload 1 --ini /etc/uwsgi.ini
+
+
+# THIS is the websockets try
+#python runflask.py

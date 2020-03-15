@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Input } from '@angular/core';
-import { Renderer, ViewChild } from '@angular/core'
+import { Renderer2, ViewChild } from '@angular/core'
 
 import { Observable, of } from 'rxjs';
 import { map, tap, take, mergeMap, catchError, finalize } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class ContentElementComponent implements OnInit {
 
   n: number;
 
-  constructor(private renderer: Renderer,
+  constructor(private renderer: Renderer2,
               private route: ActivatedRoute) { }
 
   ngOnInit() {

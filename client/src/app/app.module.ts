@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StripesComponent } from './stripes/stripes.component';
 import { StripesOverlayComponent } from './stripes-overlay/stripes-overlay.component';
 
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, routerReducer, DefaultRouterStateSerializer } from '@ngrx/router-store';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -31,11 +31,11 @@ import { reducers } from './reducers';
 import { MovieApiEffects } from './entities/movies-api.effects';
 
 // MATERIAL
-import {MatCheckboxModule} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
-import {MatMenuModule} from '@angular/material';
-import {MatButtonModule} from '@angular/material';
-import {MatIconModule} from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 // TASKS
 
@@ -75,7 +75,7 @@ import {DocumentModule} from './document/document.module';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([MovieApiEffects]),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer })
     ],
 
   exports: [ MatCheckboxModule, MatMenuModule, MatIconModule ],

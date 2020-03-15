@@ -18,13 +18,15 @@ from celery.signals import after_setup_logger
 from server.settings import config, Config
 
 from flask_cors import CORS
-from flask_socketio import SocketIO
+
+#from flask_socketio import SocketIO
 
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 app_celerey = Celery(__name__, broker=Config.CELERY_BROKER_URL)
-socketio = SocketIO()
+
+#socketio = SocketIO()
 
 def create_app(config_name):
 
@@ -62,6 +64,7 @@ def create_app(config_name):
     app.register_blueprint(api_1_0_blueprint, url_prefix='/api')
     app.register_blueprint(sse, url_prefix='/stream')
 
-    socketio.init_app(app)
+#    socketio.init_app(app)
+#    return socketio, app
 
-    return socketio, app
+    return app

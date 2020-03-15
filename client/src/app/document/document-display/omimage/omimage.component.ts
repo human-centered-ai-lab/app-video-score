@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Input } from '@angular/core';
-import { Renderer, ViewChild } from '@angular/core';
+import { Renderer2, ViewChild } from '@angular/core';
 
 import { AppState } from '../../../app-state/app-state';
 import { selectAllMovies, selectMovie, selectMoviesEntities } from '../../../entities/movie.selectors';
@@ -35,7 +35,7 @@ export class OmImageComponent implements OnInit {
   ceurls: string[];
   movies$ = this.store.pipe(select(selectMovie));
 
-  constructor(private renderer: Renderer,
+  constructor(private renderer: Renderer2,
               public   store: Store<AppState>,
               private route: ActivatedRoute) { }
 

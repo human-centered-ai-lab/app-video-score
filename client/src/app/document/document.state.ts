@@ -5,7 +5,7 @@ import * as DocumentAPIReducers from './document-api.reducer';
 import { AppState } from '../app-state/app-state';
 
 
-export interface AppState extends AppState  {
+export interface AppStateDocument extends AppState  {
     document: any;
   }
 

@@ -34,7 +34,7 @@ export class AppService {
     console.log ('in the APP SERVICE class');
     this.store.dispatch(new MovieAPIActions.LoadMovies ());
     this.store.dispatch(new TasksAPIActions.LoadTasks ());
-  //  this.store.subscribe (v => console.log(v));
+    this.store.subscribe (v => console.log(v));
     return this.http.get('/api/ping');
   }
 
