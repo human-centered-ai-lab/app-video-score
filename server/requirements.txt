@@ -13,7 +13,7 @@ Flask-Migrate==2.1.1
 uwsgi==2.0.17
 gevent==1.4.0
 psycopg2==2.6.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 flask-cors==2.1.0
 amqp==2.2.2
 Babel==2.5.3
