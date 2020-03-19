@@ -8,6 +8,10 @@ from server.app.api import api
 
 from server.app import app_celerey
 
+from server.app.services.movie_service import MovieService
+movie_service = MovieService()
+
+
 @api.route("/tasks")
 def  get_tasks():
     print ("get all celery tasks")
@@ -20,12 +24,14 @@ def  get_tasks():
         for task in tasks:
             taskid = task['id']
             result = app_celerey.AsyncResult(taskid)
+            #print (result.info)
             if result.state == 'PROGRESS':
                 taskLog = {}
                 taskLog['state'] = result.state
                 taskLog['taskID'] = task['id']
                 taskLog['actionID'] = result.info['actionID']
-                taskLog['movieID'] = result.info['movieID']
+                taskLog['movieName'] = result.info['movieName']
+                taskLog['movieID'] = (result.info['movieID'])
                 taskLog['progress'] = result.info['progress']       
                 taskreport.append (taskLog)
  
@@ -39,18 +45,21 @@ def  get_tasks():
             # 'args': "(2, '[MOVIE] MAKE STRIPES')"
             #  ^\((\d+),\s'(.*?)'
             m = re.match (r"^\((\d+),\s'(.*?)'", args)
-            #print (m.group(0))
-            #print (m.group(1))
-            #print (m.group(2))
+            #print ("0=", m.group(0))
+            #print ("1=", m.group(1))
+            #print ("2=", m.group(2))
             taskLog['state'] = 'SCHEDULED'
             taskLog['taskID'] = task['id']
-            taskLog['movieID'] = int (m.group(1))
+            movieDBID = int (m.group(1)) 
+            movie = movie_service.get(movieDBID)
+            taskLog['movieID'] = movie.uuid
+            taskLog['movieName'] = movie.name
             taskLog['actionID'] = m.group(2)  
             taskLog['progress'] = 0
 
             taskreport.append (taskLog)
         
-    tasksorderedbymmovie = sorted(taskreport, key=lambda k: k['movieID']) 
+    tasksorderedbymmovie = sorted(taskreport, key=lambda k: k['movieName']) 
 
     i = 0
     for t in tasksorderedbymmovie:

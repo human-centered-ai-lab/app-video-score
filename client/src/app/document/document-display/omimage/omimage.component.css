@@ -12,3 +12,8 @@
   position: absolute;
   z-index: 100;
 }
+
+.cursor-overlay {
+  position: absolute;
+  z-index: 100;
+}

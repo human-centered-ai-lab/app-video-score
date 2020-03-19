@@ -107,7 +107,7 @@ def generateDocAndOmImages (self, movieID, actionID):
 
         self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': perzi} )
 
         if (perzi != movie.docStatus):
             movie.docStatus =  perzi
@@ -128,14 +128,14 @@ def generateDocAndOmImages (self, movieID, actionID):
  
     self.update_state (
          state='PROGRESS', 
-         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 0}    )
+         meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': 0}    )
     syncTaskListInClient ()
 
     d = generateDocumentAndCaches (movieID, progresscallback = logProgressCutDetection) 
 
     self.update_state (
          state='FINISHED', 
-         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': 100}    )
     syncTaskListInClient ()
 
  
@@ -209,7 +209,7 @@ def generateStripes(self, movieID, actionID):
 
                 self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': perzi} )
 
                 if (perzi != movie.stripeStatus):
                     movie.stripeStatus = 1.0 * perzi
@@ -261,7 +261,7 @@ def computeCuts(self, movieID, actionID):
 
         self.update_state (
                     state='PROGRESS', 
-                    meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': perzi} )
+                    meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': perzi} )
 
         if (perzi != movie.cutStatus):
             movie.cutStatus =  perzi
@@ -314,7 +314,7 @@ def computeOmImages(self, movieID, actionID):
     cuts = movie.tags
     self.update_state (
          state='FINISHED', 
-         meta={'movieID': movie.uuid, 'actionID' :actionID, 'progress': 100}    )
+         meta={'movieID': movie.uuid, 'movieName': movie.name, 'actionID' :actionID, 'progress': 100}    )
     syncTaskListInClient ()
 
 

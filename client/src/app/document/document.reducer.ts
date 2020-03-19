@@ -9,6 +9,9 @@ export interface State  {
     content: any;
     selectedMovieUUID: string;
     selectedFrame: number;
+    selectedCE: string,
+    selectedCEpos: number,
+    selectedCEposDelta: number,
     simplecontent: any;
  }
 
@@ -17,6 +20,9 @@ export interface State  {
   content: null,
   selectedMovieUUID: '',
   selectedFrame: 0,
+  selectedCE: '',
+  selectedCEpos: -1,
+  selectedCEposDelta: 0.0,
   simplecontent: null
 };
 
@@ -40,8 +46,11 @@ export function reducer(
       return {
         ...state,
         selectedMovieUUID: action.payload.movieuuid,
-        selectedFrame : action.payload.fnr
-            };
+        selectedFrame : action.payload.fnr,
+        selectedCE: action.payload.ce,
+        selectedCEpos: action.payload.cepos,
+        selectedCEposDelta: action.payload.ceposdelta
+      };
       return state;
     }
     case DocumentActionTypes.ClearDocument: {

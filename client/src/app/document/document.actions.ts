@@ -23,7 +23,7 @@ export class ClearDocument implements Action {
 
 export class SetSelectedMovieAndFrame implements Action {
   readonly type = DocumentActionTypes.SetSelectedMovieAndFrame;
-  constructor(public payload: { movieuuid: string, fnr: number }) {}
+  constructor(public payload: { movieuuid: string, fnr: number, ce: string, cepos: number, ceposdelta: number }) {}
 }
 
 

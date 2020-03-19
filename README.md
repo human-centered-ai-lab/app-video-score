@@ -18,7 +18,9 @@
 * Open Browser and type following URL for the main App
   * `http://127.0.0.1:8077` - The Angular App  
   * `http://127.0.0.1:8077/api` - Flask API root
-  * `http://127.0.0.1:8077/api/ping` - Flask API ping with json return.
+  * `http://127.0.0.1:8077/api/ping` - Flask API ping with json return
+  * `http://127.0.0.1:8077/api/movies` - Return a List of 
+  * `http://127.0.0.1:8077/api/movie/8/setparams` - Flask API ping with json return.
 * Open Browser and type following URL for the helper Apps
   * `http://127.0.0.1:8078` - Adminer Postgres Browser,  U:postgres, P:postgres, DB:users_dev 
   * `http://127.0.0.1:8079` - Celery Monitor

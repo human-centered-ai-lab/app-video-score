@@ -3,12 +3,17 @@
         <img src = "{{fceurl}}"  width="140px"> XXXXXXXXXXXX <img src = "{{lceurl}}"  width="140px">
 </ng-template>
 <ng-template #elseBlock>
-        <ng-container  *ngFor="let url of ceurls index as i"> 
-            <img  (mouseenter) ="mouseEnter('span a')" 
+        <ng-container  *ngFor="let o of ainfos index as i"> 
+        <span class="outerdiv">       
+                <span *ngIf="( ((selectedCE  | async) == ceuuid) &&((selectedCEpos  | async) == i) )" >
+                  <img src="assets/cursor.png" alt="image" height="130px"  width="12%" right="90px" class="cursor-overlay" style="left:{{selectedCEdeltaCursor}}px">
+        </span>
+          <img  (mouseenter) ="mouseEnter('span a')" 
                   (mouseleave) ="mouseLeave('span A')"
                   (mousemove)  ="mouseMove(i, $event)"
-                  (click)  ="click(i, $event)"
-                  src = "{{url}}"  width="100px">
+                  (click)  ="click(ceuuid, i, $event)"
+                  src = "{{o.url}}"  width="100px">
+          </span>
          </ng-container>
 </ng-template>
 

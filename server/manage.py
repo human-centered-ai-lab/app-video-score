@@ -118,50 +118,52 @@ def seed_db():
         numberOfFrames=6317,
         fps =25
     ))
-    db.session.add(Movie(
-        uuid="85121ddd-b1da-4322-9dc5-6da131a4b3d5",
-        name="Testrecording, 21.Dez 2017, Kurt",
-        source="FILESYSTEM",
-        uri="test.mp4",
-        active=True,
-        width="1920",
-        height="1080",
-        numberOfFrames=8695,
-        fps =11.0025308422008
-    ))
-    db.session.add(Movie(
-        uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
-        name="V as Vendetta",
-        source="FILESYSTEM",
-        uri="v.avi",
-        active=True,
-        width="704 ",
-        height="288",
-        numberOfFrames=190650,
-        fps =25
-    ))
-    db.session.add(Movie(
-        uuid="33db9eb5-6bc6-4f76-929d-f09622b89db7",
-        name="Star.Trek.Raumschiff.Enterprise.TOS.S01E01.Das.letzte.seiner.Art.	",
-        source="FILESYSTEM",
-        uri="startrek.mkv",
-        active=True,
-        width="960",
-        height="720",
-        numberOfFrames=72602,
-        fps = 23.976023976024
-    ))    
-    db.session.add(Movie(
-        uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
-        name="Hobbit",
-        source="FILESYSTEM",
-        uri="hobbit.mkv",
-        active=True,
-        width="1920",
-        height="800",
-        numberOfFrames=235985,
-        fps =23.976023976024
-    ))
+
+    if (os.environ["FLASK_CONFIG"] == 'development'):
+        db.session.add(Movie(
+            uuid="85121ddd-b1da-4322-9dc5-6da131a4b3d5",
+            name="Testrecording, 21.Dez 2017, Kurt",
+            source="FILESYSTEM",
+            uri="test.mp4",
+            active=True,
+            width="1920",
+            height="1080",
+            numberOfFrames=8695,
+            fps =11.0025308422008
+        ))
+        db.session.add(Movie(
+            uuid="2bbcc86a-6714-11ea-bc55-0242ac130003",
+            name="V as Vendetta",
+            source="FILESYSTEM",
+            uri="v.avi",
+            active=True,
+            width="704 ",
+            height="288",
+            numberOfFrames=190650,
+            fps =25
+        ))
+        db.session.add(Movie(
+            uuid="33db9eb5-6bc6-4f76-929d-f09622b89db7",
+            name="TOS.S01E01 Das letzte seiner Art",
+            source="FILESYSTEM",
+            uri="startrek.mkv",
+            active=True,
+            width="960",
+            height="720",
+            numberOfFrames=72602,
+            fps = 23.976023976024
+        ))    
+        db.session.add(Movie(
+            uuid="a0a0fd89-d32b-4424-aab7-076173cb1f2b",
+            name="Hobbit",
+            source="FILESYSTEM",
+            uri="hobbit.mkv",
+            active=True,
+            width="1920",
+            height="800",
+            numberOfFrames=235985,
+            fps =23.976023976024
+        ))
 
     db.session.commit()
 

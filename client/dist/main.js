@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h3>{{(content|async)?.name}}</h3>\n\n\n    <div style=\"height: 90vh;\">\n        <as-split [direction]=\"direction\">\n            <as-split-area size=\"70\">\n                <div *ngIf=\"co | async\">\n                    <ng-container *ngFor=\"let c of co | async\">\n                        <app-contentelement [id]=\"c.id\" [payload]=\"c.payload\"> </app-contentelement>\n                        <span  #gluebetweenCE>_</span>\n                    </ng-container>\n                </div>\n            </as-split-area>\n            <as-split-area size=\"30\">\n               <p>Selected Movie and Frame</p>\n                 \n               <div *ngIf=\"selectedMovie | async\">\n                   {{(movies$|async)(selectedMovie|async).name}}  -- {{selectedFrame|async}}\n               </div>\n\n              <p>YOUTUBE VIDEO </p>\n              <youtube-player\n              #player\n              [videoId]=\"youtubevideoid\"\n              (ready)=\"onReady($event)\"\n              (stateChange)=\"onStateChange($event)\"\n              >\n            </youtube-player>\n            </as-split-area>\n        </as-split>\n    </div>\n\n\n\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h3>{{(content|async)?.name}}</h3>\n\n    <div style=\"height: 90vh;\">\n        <as-split [direction]=\"direction\">\n            <as-split-area size=\"70\">\n                <div *ngIf=\"co | async\">\n                    <ng-container *ngFor=\"let c of co | async\">\n                        <app-contentelement [id]=\"c.id\" [payload]=\"c.payload\"> </app-contentelement>\n                        <span  #gluebetweenCE>_</span>\n                    </ng-container>\n                </div>\n            </as-split-area>\n            <as-split-area size=\"30\">\n               <p>Selected Movie and Frame</p>\n                 \n               <div *ngIf=\"selectedMovie | async\">\n                   {{(movies$|async)(selectedMovie|async).name}}  -- {{selectedFrame|async}}\n               </div>\n              {{youtubevideoid}}\n              <p>YOUTUBE VIDEO </p>\n              \n              <youtube-player\n              [videoId]=\"tiNPFqalCh0\"\n              [height]=\"600\"\n              [width]=\"1080\"\n              >\n              </youtube-player>\n            <p>YOUTUBE VIDEO  END</p>\n            </as-split-area>\n        </as-split>\n    </div>\n\n\n\n\n");
 
 /***/ }),
 
@@ -1130,18 +1130,10 @@ var DocumentDisplayComponent = /** @class */ (function () {
         this.content = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_4__["select"])(_document_selectors__WEBPACK_IMPORTED_MODULE_5__["selectDocumentContent"]));
         this.direction = 'horizontal';
     }
-    Object.defineProperty(DocumentDisplayComponent.prototype, "youtubevideoid", {
-        set: function (id) {
-            this.youtubevideoid = id;
-        },
-        enumerable: true,
-        configurable: true
-    });
     DocumentDisplayComponent.prototype.ngOnInit = function () {
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         document.body.appendChild(tag);
-        // this.youtubevideoid  = 'tiNPFqalCh0'; 
         this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
         console.log('Load Document', this.id);
         this.store.dispatch({ type: '[Document] Clear Document' });
@@ -1195,11 +1187,6 @@ var DocumentDisplayComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('player'),
         Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
     ], DocumentDisplayComponent.prototype, "player", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String),
-        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String])
-    ], DocumentDisplayComponent.prototype, "youtubevideoid", null);
     DocumentDisplayComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-document-display',
@@ -1410,18 +1397,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm5/common.js");
 /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/__ivy_ngcc__/fesm5/store.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/__ivy_ngcc__/fesm5/effects.js");
-/* harmony import */ var _document_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./document.state */ "./src/app/document/document.state.ts");
-/* harmony import */ var _document_api_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./document-api.effects */ "./src/app/document/document-api.effects.ts");
-/* harmony import */ var _document_display_document_display_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./document-display/document-display.component */ "./src/app/document/document-display/document-display.component.ts");
-/* harmony import */ var _document_display_contentelement_contentelement_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./document-display/contentelement/contentelement.component */ "./src/app/document/document-display/contentelement/contentelement.component.ts");
-/* harmony import */ var _document_display_omimage_omimage_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./document-display/omimage/omimage.component */ "./src/app/document/document-display/omimage/omimage.component.ts");
-/* harmony import */ var angular_split__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-split */ "./node_modules/angular-split/__ivy_ngcc__/fesm5/angular-split.js");
-/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm5/table.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm5/router.js");
+/* harmony import */ var _angular_youtube_player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/youtube-player */ "./node_modules/@angular/youtube-player/__ivy_ngcc__/fesm5/youtube-player.js");
+/* harmony import */ var _document_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./document.state */ "./src/app/document/document.state.ts");
+/* harmony import */ var _document_api_effects__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./document-api.effects */ "./src/app/document/document-api.effects.ts");
+/* harmony import */ var _document_display_document_display_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./document-display/document-display.component */ "./src/app/document/document-display/document-display.component.ts");
+/* harmony import */ var _document_display_contentelement_contentelement_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./document-display/contentelement/contentelement.component */ "./src/app/document/document-display/contentelement/contentelement.component.ts");
+/* harmony import */ var _document_display_omimage_omimage_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./document-display/omimage/omimage.component */ "./src/app/document/document-display/omimage/omimage.component.ts");
+/* harmony import */ var angular_split__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angular-split */ "./node_modules/angular-split/__ivy_ngcc__/fesm5/angular-split.js");
+/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm5/table.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm5/router.js");
 
 
 
 
+
+// VIDEO PLAYER
 
 
 
@@ -1438,21 +1428,21 @@ var DocumentModule = /** @class */ (function () {
     }
     DocumentModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [
-                _document_display_document_display_component__WEBPACK_IMPORTED_MODULE_7__["DocumentDisplayComponent"],
-                _document_display_contentelement_contentelement_component__WEBPACK_IMPORTED_MODULE_8__["ContentElementComponent"],
-                _document_display_omimage_omimage_component__WEBPACK_IMPORTED_MODULE_9__["OmImageComponent"]
-            ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _angular_material_table__WEBPACK_IMPORTED_MODULE_11__["MatTableModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_12__["RouterModule"],
-                //    YouTubePlayerModule,
-                angular_split__WEBPACK_IMPORTED_MODULE_10__["AngularSplitModule"].forRoot(),
-                _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["StoreModule"].forFeature('document', _document_state__WEBPACK_IMPORTED_MODULE_5__["documentreducers"]),
-                _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_document_api_effects__WEBPACK_IMPORTED_MODULE_6__["DocumentApiEffects"]])
+                _angular_youtube_player__WEBPACK_IMPORTED_MODULE_5__["YouTubePlayerModule"],
+                _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatTableModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_13__["RouterModule"],
+                angular_split__WEBPACK_IMPORTED_MODULE_11__["AngularSplitModule"].forRoot(),
+                _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["StoreModule"].forFeature('document', _document_state__WEBPACK_IMPORTED_MODULE_6__["documentreducers"]),
+                _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_document_api_effects__WEBPACK_IMPORTED_MODULE_7__["DocumentApiEffects"]])
             ],
-            exports: [_angular_material_table__WEBPACK_IMPORTED_MODULE_11__["MatTableModule"]],
+            declarations: [
+                _document_display_document_display_component__WEBPACK_IMPORTED_MODULE_8__["DocumentDisplayComponent"],
+                _document_display_contentelement_contentelement_component__WEBPACK_IMPORTED_MODULE_9__["ContentElementComponent"],
+                _document_display_omimage_omimage_component__WEBPACK_IMPORTED_MODULE_10__["OmImageComponent"]
+            ],
+            exports: [_angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatTableModule"]],
         })
     ], DocumentModule);
     return DocumentModule;

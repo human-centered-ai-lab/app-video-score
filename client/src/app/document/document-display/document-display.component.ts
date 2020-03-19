@@ -19,7 +19,8 @@ export interface OMImagePayload {
 }
 
 export interface ContentElement {
-  id: string;
+  id: string,
+  type: string,
   payload: OMImagePayload;
 }
 
@@ -71,15 +72,24 @@ export class DocumentDisplayComponent implements OnInit {
       [id: string]: T;
     }
 
-    function reorder (ids: string[], entities: Dictionary<string>): any {
-        return   ids.map((id: any) => (entities as any)[id]);
-    }
+    function orderedCE (ids: string[], entities: Dictionary<string>): any {
+      const ces: ContentElement[] = [];
+      console.log ('START GENERATE ORDERED CE');
+      for (const id of ids) {
+          let cecontent = eval(entities[id]);
+          const ce: ContentElement = {id : id, type: cecontent.id, payload: JSON.parse (cecontent.payload)};
+          ces.push (ce);
+      }
+      console.log ('FINISH GENERATE ORDERED CE');
+      return ces;
+  }
 
     function makeCE (input: any): ContentElement[] {
       const ces: ContentElement[] = [];
       console.log ('START GENERATE CE');
       for (const i of input) {
-        const ce: ContentElement = {id : i.id, payload: JSON.parse (i.payload)};
+        const ce: ContentElement = {id : i.id, type: i.type, payload: JSON.parse (i.payload)};
+        console.log ("kk", ce);
         ces.push (ce);
       }
       console.log ('FINISH GENERATE CE');
@@ -92,11 +102,10 @@ export class DocumentDisplayComponent implements OnInit {
        filter (v => v !== null),
        map  (v => {  if (v == null) {return null; }
                     console.log ('START REORDER');
-                    const ce = reorder ( eval(v['content_element_index']), v['content_elements']);
+                    const oce = orderedCE  ( eval(v['content_element_index']),  v['content_elements']);
                     console.log ('FINISH REORDER');
-                    return ce;
-             }),
-       map (v => makeCE(v))
+                    return oce;
+             })
      );
 
     this.index = this.content.pipe (
