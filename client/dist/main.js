@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-omimage [movieuuid]=\"payload.movieuuid\" [s]=\"payload.s\" [e]=\"payload.e\" [n]=\"payload.n\"></app-omimage> ");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-omimage [ceuuid]=\"id\" [movieuuid]=\"payload.movieuuid\" [s]=\"payload.s\" [e]=\"payload.e\" [n]=\"payload.n\"></app-omimage> ");
 
 /***/ }),
 
@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"compressOmImages; then thenBlock else elseBlock\"></div>\n<ng-template #thenBlock> \n        <img src = \"{{fceurl}}\"  width=\"140px\"> XXXXXXXXXXXX <img src = \"{{lceurl}}\"  width=\"140px\">\n</ng-template>\n<ng-template #elseBlock>\n        <ng-container  *ngFor=\"let url of ceurls index as i\"> \n            <img  (mouseenter) =\"mouseEnter('span a')\" \n                  (mouseleave) =\"mouseLeave('span A')\"\n                  (mousemove)  =\"mouseMove(i, $event)\"\n                  (click)  =\"click(i, $event)\"\n                  src = \"{{url}}\"  width=\"100px\">\n         </ng-container>\n</ng-template>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"compressOmImages; then thenBlock else elseBlock\"></div>\n<ng-template #thenBlock> \n        <img src = \"{{fceurl}}\"  width=\"140px\"> XXXXXXXXXXXX <img src = \"{{lceurl}}\"  width=\"140px\">\n</ng-template>\n<ng-template #elseBlock>\n        <ng-container  *ngFor=\"let o of ainfos index as i\"> \n        <span class=\"outerdiv\">       \n                <span *ngIf=\"( ((selectedCE  | async) == ceuuid) &&((selectedCEpos  | async) == i) )\" >\n                  <img src=\"assets/cursor.png\" alt=\"image\" height=\"130px\"  width=\"12%\" right=\"90px\" class=\"cursor-overlay\" style=\"left:{{selectedCEdeltaCursor}}px\">\n        </span>\n          <img  (mouseenter) =\"mouseEnter('span a')\" \n                  (mouseleave) =\"mouseLeave('span A')\"\n                  (mousemove)  =\"mouseMove(i, $event)\"\n                  (click)  =\"click(ceuuid, i, $event)\"\n                  src = \"{{o.url}}\"  width=\"100px\">\n          </span>\n         </ng-container>\n</ng-template>\n\n");
 
 /***/ }),
 
@@ -1143,15 +1143,25 @@ var DocumentDisplayComponent = /** @class */ (function () {
             }
             return Dictionary;
         }());
-        function reorder(ids, entities) {
-            return ids.map(function (id) { return entities[id]; });
+        function orderedCE(ids, entities) {
+            var ces = [];
+            console.log('START GENERATE ORDERED CE');
+            for (var _i = 0, ids_1 = ids; _i < ids_1.length; _i++) {
+                var id = ids_1[_i];
+                var cecontent = eval(entities[id]);
+                var ce = { id: id, type: cecontent.id, payload: JSON.parse(cecontent.payload) };
+                ces.push(ce);
+            }
+            console.log('FINISH GENERATE ORDERED CE');
+            return ces;
         }
         function makeCE(input) {
             var ces = [];
             console.log('START GENERATE CE');
             for (var _i = 0, input_1 = input; _i < input_1.length; _i++) {
                 var i = input_1[_i];
-                var ce = { id: i.id, payload: JSON.parse(i.payload) };
+                var ce = { id: i.id, type: i.type, payload: JSON.parse(i.payload) };
+                console.log("kk", ce);
                 ces.push(ce);
             }
             console.log('FINISH GENERATE CE');
@@ -1164,10 +1174,10 @@ var DocumentDisplayComponent = /** @class */ (function () {
                 return null;
             }
             console.log('START REORDER');
-            var ce = reorder(eval(v['content_element_index']), v['content_elements']);
+            var oce = orderedCE(eval(v['content_element_index']), v['content_elements']);
             console.log('FINISH REORDER');
-            return ce;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (v) { return makeCE(v); }));
+            return oce;
+        }));
         this.index = this.content.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])(function (v) { return v !== null; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (v) { return eval(v['content_element_index']); }));
         // <app-omsubimage  [startFN]="ce.startFN" [endFN]="somi.endFN" [centerFN]="ce.centerFN"></app-omsubimage>
         //   this.co.subscribe (v => console.log(v));
@@ -1214,7 +1224,7 @@ var DocumentDisplayComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".outerdiv {\n  position: relative;\n  display: inline;\n}\n\n.omcanvas {\n/*  position: absolute; */\n  z-index: 0;\n}\n\n.overlaycanvas {\n  position: absolute;\n  z-index: 100;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZG9jdW1lbnQvZG9jdW1lbnQtZGlzcGxheS9vbWltYWdlL29taW1hZ2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtFQUNsQixlQUFlO0FBQ2pCOztBQUVBO0FBQ0EseUJBQXlCO0VBQ3ZCLFVBQVU7QUFDWjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2QiLCJmaWxlIjoic3JjL2FwcC9kb2N1bWVudC9kb2N1bWVudC1kaXNwbGF5L29taW1hZ2Uvb21pbWFnZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm91dGVyZGl2IHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBkaXNwbGF5OiBpbmxpbmU7XG59XG5cbi5vbWNhbnZhcyB7XG4vKiAgcG9zaXRpb246IGFic29sdXRlOyAqL1xuICB6LWluZGV4OiAwO1xufVxuXG4ub3ZlcmxheWNhbnZhcyB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgei1pbmRleDogMTAwO1xufVxuIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".outerdiv {\n  position: relative;\n  display: inline;\n}\n\n.omcanvas {\n/*  position: absolute; */\n  z-index: 0;\n}\n\n.overlaycanvas {\n  position: absolute;\n  z-index: 100;\n}\n\n.cursor-overlay {\n  position: absolute;\n  z-index: 100;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZG9jdW1lbnQvZG9jdW1lbnQtZGlzcGxheS9vbWltYWdlL29taW1hZ2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtFQUNsQixlQUFlO0FBQ2pCOztBQUVBO0FBQ0EseUJBQXlCO0VBQ3ZCLFVBQVU7QUFDWjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixZQUFZO0FBQ2Q7O0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsWUFBWTtBQUNkIiwiZmlsZSI6InNyYy9hcHAvZG9jdW1lbnQvZG9jdW1lbnQtZGlzcGxheS9vbWltYWdlL29taW1hZ2UuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5vdXRlcmRpdiB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogaW5saW5lO1xufVxuXG4ub21jYW52YXMge1xuLyogIHBvc2l0aW9uOiBhYnNvbHV0ZTsgKi9cbiAgei1pbmRleDogMDtcbn1cblxuLm92ZXJsYXljYW52YXMge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDEwMDtcbn1cblxuLmN1cnNvci1vdmVybGF5IHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiAxMDA7XG59XG4iXX0= */");
 
 /***/ }),
 
@@ -1231,9 +1241,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm5/core.js");
 /* harmony import */ var _entities_movie_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../entities/movie.selectors */ "./src/app/entities/movie.selectors.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm5/router.js");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/__ivy_ngcc__/fesm5/store.js");
+/* harmony import */ var _document_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../document.selectors */ "./src/app/document/document.selectors.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm5/router.js");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/__ivy_ngcc__/fesm5/store.js");
+
 
 
 
@@ -1246,11 +1258,18 @@ var OmImageComponent = /** @class */ (function () {
         this.renderer = renderer;
         this.store = store;
         this.route = route;
-        this.movies$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_5__["select"])(_entities_movie_selectors__WEBPACK_IMPORTED_MODULE_2__["selectMovie"]));
+        this.movies$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_entities_movie_selectors__WEBPACK_IMPORTED_MODULE_2__["selectMovie"]));
+        this.selectedFrame = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_document_selectors__WEBPACK_IMPORTED_MODULE_3__["selectDocumentSelectedFrame"]));
+        this.selectedCE = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_document_selectors__WEBPACK_IMPORTED_MODULE_3__["selectDocumentSelectedCE"]));
+        this.selectedCEpos = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_document_selectors__WEBPACK_IMPORTED_MODULE_3__["selectDocumentSelectedCEpos"]));
+        this.selectedCEposDelta = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_document_selectors__WEBPACK_IMPORTED_MODULE_3__["selectDocumentSelectedCEposDelta"]));
     }
     OmImageComponent.prototype.ngOnInit = function () {
+        //   console.log ("NG INIT IN OM IMAGES")
         this.delta = this.e - this.s;
         this.showSummary = false;
+        this.showCursor = false;
+        //   this.selectedCEposDelta.subscribe (x => console.log(x));
         function pad(num, size) {
             var s = num + '';
             while (s.length < size) {
@@ -1258,25 +1277,29 @@ var OmImageComponent = /** @class */ (function () {
             }
             return s;
         }
-        this.ceurls = [];
+        this.ainfos = [];
         for (var _i = 0; _i < this.n; _i++) {
             var luerl = 'static/cache/' +
                 this.movieuuid + '/omi/'
                 + pad(this.s, 8) + '_' + pad(this.e, 8) + '/'
                 + pad(_i, 8) + '.jpg';
-            this.ceurls.push(luerl);
+            var sframenr = Math.round(this.s + this.delta * (_i * 200) / this.n / 100.0);
+            var eframenr = Math.round(this.s + this.delta * ((_i + 1) * 200) / this.n / 100.0);
+            var ominfo = { s: sframenr, e: eframenr, url: luerl };
+            this.ainfos.push(ominfo);
         }
-        this.ceurl = 'static/cache/' +
+        this.cuerl = 'static/cache/' +
             this.movieuuid + '/omi/'
             + pad(this.s, 8) + '_' + pad(this.e, 8) + '/'
             + pad(0, 8) + '.jpg';
+        var cominfo = { cpos: -1, url: this.cuerl };
         this.compressOmImages = false;
         if (this.showSummary && (this.n > 2)) {
             this.compressOmImages = true;
-            this.fceurl = this.ceurls[0];
-            this.lceurl = this.ceurls[this.n - 1];
+            this.finfo = this.ainfos[0];
+            this.linfo = this.ainfos[this.n - 1];
         }
-        // console.log (this.ceurl);
+        // console.log (this.cuerl);
         // console.log (this.subomis);
     };
     OmImageComponent.prototype.mouseEnter = function (div) {
@@ -1288,18 +1311,21 @@ var OmImageComponent = /** @class */ (function () {
     OmImageComponent.prototype.mouseMove = function (i, e) {
         var _this = this;
         var framenr = Math.round(this.s + this.delta * (i * 200 + e.offsetX) / this.n / 100.0);
-        this.store.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["take"])(1), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_5__["select"])(_entities_movie_selectors__WEBPACK_IMPORTED_MODULE_2__["selectMovie"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (f) { return f(_this.movieuuid); })).subscribe(function (m) { return console.log(m.name, Math.round(framenr)); });
-        this.store.dispatch({ type: '[Document] Set Movie and Frame', payload: { movieuuid: this.movieuuid, fnr: framenr } });
+        this.store.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["select"])(_entities_movie_selectors__WEBPACK_IMPORTED_MODULE_2__["selectMovie"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (f) { return f(_this.movieuuid); })).subscribe(function (m) { return console.log(m.name, Math.round(framenr)); });
+        //this.store.dispatch({ type: '[Document] Set Movie and Frame', payload: {movieuuid: this.movieuuid, fnr: framenr}} );
     };
-    OmImageComponent.prototype.click = function (i, e) {
+    OmImageComponent.prototype.click = function (celem, i, e) {
         var framenr = Math.round(this.s + this.delta * (i * 200 + e.offsetX) / this.n / 100.0);
-        this.store.dispatch({ type: '[Document] Set Movie and Frame', payload: { movieuuid: this.movieuuid, fnr: framenr } });
-        console.log('click :' + framenr);
+        var deltainframe = e.offsetX / 100;
+        this.store.dispatch({ type: '[Document] Set Movie and Frame',
+            payload: { movieuuid: this.movieuuid, fnr: framenr, ce: celem, cepos: i, ceposdelta: deltainframe } });
+        this.selectedCEdeltaCursor = e.offsetX - 5;
+        console.log('click : ', celem, i, deltainframe);
     };
     OmImageComponent.ctorParameters = function () { return [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] },
-        { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["Store"] },
-        { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] }
+        { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_6__["Store"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] }
     ]; };
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -1317,6 +1343,10 @@ var OmImageComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
         Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
     ], OmImageComponent.prototype, "movieuuid", void 0);
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
+    ], OmImageComponent.prototype, "ceuuid", void 0);
     OmImageComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-omimage',
@@ -1324,8 +1354,8 @@ var OmImageComponent = /** @class */ (function () {
             styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./omimage.component.css */ "./src/app/document/document-display/omimage/omimage.component.css")).default]
         }),
         Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"],
-            _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["Store"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
+            _ngrx_store__WEBPACK_IMPORTED_MODULE_6__["Store"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]])
     ], OmImageComponent);
     return OmImageComponent;
 }());
@@ -1471,6 +1501,9 @@ var initialState = {
     content: null,
     selectedMovieUUID: '',
     selectedFrame: 0,
+    selectedCE: '',
+    selectedCEpos: -1,
+    selectedCEposDelta: 0.0,
     simplecontent: null
 };
 function reducer(state, action) {
@@ -1482,7 +1515,7 @@ function reducer(state, action) {
         }
         case _document_actions__WEBPACK_IMPORTED_MODULE_1__["DocumentActionTypes"].SetSelectedMovieAndFrame: {
             console.log('SELECT  SELECT :' + action.payload.movieuuid);
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, state), { selectedMovieUUID: action.payload.movieuuid, selectedFrame: action.payload.fnr });
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, state), { selectedMovieUUID: action.payload.movieuuid, selectedFrame: action.payload.fnr, selectedCE: action.payload.ce, selectedCEpos: action.payload.cepos, selectedCEposDelta: action.payload.ceposdelta });
             return state;
         }
         case _document_actions__WEBPACK_IMPORTED_MODULE_1__["DocumentActionTypes"].ClearDocument: {
@@ -1501,7 +1534,7 @@ function reducer(state, action) {
 /*!************************************************!*\
   !*** ./src/app/document/document.selectors.ts ***!
   \************************************************/
-/*! exports provided: selectDocumentContent, selectDocumentSelectedMovie, selectDocumentSelectedFrame */
+/*! exports provided: selectDocumentContent, selectDocumentSelectedMovie, selectDocumentSelectedFrame, selectDocumentSelectedCE, selectDocumentSelectedCEpos, selectDocumentSelectedCEposDelta */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1509,11 +1542,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentContent", function() { return selectDocumentContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentSelectedMovie", function() { return selectDocumentSelectedMovie; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentSelectedFrame", function() { return selectDocumentSelectedFrame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentSelectedCE", function() { return selectDocumentSelectedCE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentSelectedCEpos", function() { return selectDocumentSelectedCEpos; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDocumentSelectedCEposDelta", function() { return selectDocumentSelectedCEposDelta; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
 var selectDocumentContent = function (state) { return state.document.document.content; };
 var selectDocumentSelectedMovie = function (state) { return state.document.document.selectedMovieUUID; };
 var selectDocumentSelectedFrame = function (state) { return state.document.document.selectedFrame; };
+var selectDocumentSelectedCE = function (state) { return state.document.document.selectedCE; };
+var selectDocumentSelectedCEpos = function (state) { return state.document.document.selectedCEpos; };
+var selectDocumentSelectedCEposDelta = function (state) { return state.document.document.selectedCEposDelta; };
 
 
 /***/ }),
