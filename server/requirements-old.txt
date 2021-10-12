@@ -25,6 +25,6 @@ vine==1.1.4
 
 moviepy==0.2.3.5
 numpy==1.15.4
-opencv-python==3.4.4.19
+opencv-python==4.2.0.32
 pafy==0.5.4
 youtube-dl==2018.12.17
