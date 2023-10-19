@@ -1,4 +1,4 @@
-FROM python:3.6.2
+FROM python:3.11.6
 
 MAINTAINER Heimo Müller "heimo.mueller@mac.com"
 
@@ -39,7 +39,7 @@ RUN apt-get install -y \
     libmp3lame-dev \
     checkinstall
 
-RUN apt-get install -y libopus-dev  libx264-142 libx264-dev
+RUN apt-get install -y libopus-dev  libx264-164 libx264-dev
 
 RUN mkdir -p /tmp
 WORKDIR /tmp
